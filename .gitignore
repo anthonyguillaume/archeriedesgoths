@@ -1,0 +1,5 @@
+# Bundle Claude Design d'origine (17 Mo) — conservé localement, pas versionné
+Archerie des Goths.html
+# Captures Playwright
+.playwright-mcp/
+.DS_Store
