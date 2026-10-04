@@ -35,7 +35,7 @@ sont les originaux redimensionnés à 1600 px côté long (JPEG qualité 60 via 
 remplacer une photo, garder le même nom de fichier et un côté long de 1600 px. Détails et
 critères de fidélité : `docs/superpowers/specs/2026-10-04-site-github-pages-design.md`.
 
-## Fonctionnement technique (branche design-review)
+## Fonctionnement technique
 
 - `js/sticky.js` : barre collante (blason + bouton « Rejoindre le club ») révélée par un
   `IntersectionObserver` une fois le hero sorti de l'écran. Sans JavaScript, la barre n'apparaît
