@@ -255,7 +255,7 @@ a:hover { color: var(--text); text-decoration: underline; }
 /* ---- Section « Inscription » ---- */
 .inscription { max-width: 1120px; margin: 0 auto; padding: 56px 24px 24px; }
 .inscription-card { background: var(--amber); color: var(--bg); border-radius: 12px; padding: clamp(22px, 4vw, 32px); display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
-.inscription-title { font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 800; text-transform: uppercase; }
+.inscription-title { font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 800; text-transform: uppercase; margin: 0; }
 .inscription-card p { margin: 6px 0 0; font-size: 15px; line-height: 1.5; max-width: 60ch; }
 .btn-dark { background: var(--bg); color: var(--text); font-weight: 700; padding: 14px 28px; border-radius: 6px; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
 .btn-dark:hover { transform: translateY(-3px); background: var(--bg-card-hover); box-shadow: 0 12px 24px rgba(0,0,0,0.35); text-decoration: none; }
@@ -282,3 +282,6 @@ a:hover { color: var(--text); text-decoration: underline; }
 .footer-address { font-size: 14px; color: rgba(245,241,234,0.7); }
 .footer-links { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; font-size: 14px; }
 .footer-legal { font-size: 12px; color: rgba(245,241,234,0.45); }
+
+/* Texte réservé aux lecteurs d'écran (invisible à l'écran) */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
