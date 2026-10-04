@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://anthonyguillaume.github.io/archeriedesgoths/sitemap.xml

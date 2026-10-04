@@ -11,6 +11,9 @@ Site statique, sans build ni dépendance :
 - `css/style.css` — styles (couleurs, polices, composants)
 - `assets/fonts/` — polices Barlow et Barlow Condensed (woff2, embarquées)
 - `assets/img/` — photos et blason
+- `robots.txt`, `sitemap.xml` — référencement ; les balises Open Graph et les données
+  structurées (JSON-LD `SportsClub` : adresse, horaires) sont dans le `<head>` de `index.html`.
+  Si un horaire change, le mettre à jour aux deux endroits (section Horaires et JSON-LD).
 
 ## Modifier le site
 
