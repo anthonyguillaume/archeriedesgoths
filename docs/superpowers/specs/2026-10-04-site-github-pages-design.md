@@ -16,7 +16,8 @@ bundle de 17 Mo auto-extractible), sans dépendre du runtime Claude Design.
   et une balise `<helmet>` (= contenu à placer dans `<head>`). C'est tout ce que fait le runtime.
 - Polices Google embarquées en woff2 : Barlow 400/500/600 et Barlow Condensed 600/700/800,
   chacune en 3 sous-ensembles (latin, latin-ext, vietnamese).
-- 6 images JPEG (hero 2016×1512, blason 276×185, 4 photos galerie dont deux de 4032×3024 à 4–6 Mo).
+- 6 images JPEG (hero 2016×1512, blason 276×185, 4 photos galerie dont une 4032×3024 avec
+  orientation EXIF 6 et une 3024×4032, à 4–6 Mo).
 - Palette : fond `#221c22`, texte `#f5f1ea`, rouge `#d81e26`, ambre `#e8a33d`, cartes `#2e262e`,
   footer `#171217`.
 
@@ -68,8 +69,10 @@ hauteurs de sections mesurées sur la source :
 1. Hauteurs de sections identiques à ±2 px dans les deux vues.
 2. Polices chargées : Barlow 400/600, Barlow Condensed 700/800 (via `document.fonts`).
 3. Aucune erreur console (hors favicon), aucune ressource 404.
-4. Toutes les règles `:hover` présentes dans la feuille de style (comptage = nombre de
-   `style-hover` dans la source : 22).
+4. Chaque élément porteur d'un `style-hover` dans la source (23 au total) a ses déclarations
+   dans une règle `:hover` qui s'applique à lui, avec les mêmes valeurs. Les règles peuvent
+   être factorisées (plusieurs éléments partagent une classe), mais la couleur d'un lien dont
+   la source fixe `color` inline doit être conservée au survol malgré le `a:hover` global.
 5. Les ancres `#club #horaires #tarifs #inscription` existent et la nav pointe dessus.
 6. Comparaison visuelle des captures full-page : pas de différence perceptible.
 
