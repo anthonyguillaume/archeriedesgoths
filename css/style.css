@@ -1,5 +1,8 @@
 /* Archerie des Goths — feuille de style
-   Port fidèle du design Claude Design : chaque valeur reprend la déclaration inline d'origine. */
+   Base : port du design Claude Design (branche main). Branche design-review : s'écarte volontairement
+   du bundle d'origine sur le contraste, les cibles tactiles 44 px, le focus clavier, reduced-motion,
+   les images WebP/<picture>, le regroupement des tarifs, la barre collante (JS), le plan OpenStreetMap
+   et la galerie 2 colonnes mobile. */
 
 :root {
   --bg: #221c22;
@@ -8,6 +11,10 @@
   --bg-footer: #171217;
   --text: #f5f1ea;
   --red: #d81e26;
+  --red-deep: #c41a20;
+  --strip-bg: #1a151a;
+  --h2-lg: clamp(32px, 5vw, 52px);
+  --h2-sm: clamp(28px, 4vw, 42px);
   --red-hover: #e8322b;
   --amber: #e8a33d;
 }
@@ -177,13 +184,21 @@
 }
 
 /* ---- Global (ex-<helmet>) ---- */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
 html, body { margin: 0; padding: 0; background: var(--bg); }
 body { font-family: Barlow, sans-serif; color: var(--text); }
 a { color: var(--amber); text-decoration: none; }
 a:hover { color: var(--text); text-decoration: underline; }
 
+/* Focus clavier visible partout (jamais d'outline: none sans remplacement) */
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+.btn-primary:focus-visible, .btn-dark:focus-visible, .btn-ghost:focus-visible { outline-color: var(--text); }
+.skip-link { position: absolute; left: 16px; top: -100px; z-index: 100; background: var(--amber); color: var(--bg); font-weight: 700; padding: 10px 16px; border-radius: 6px; text-decoration: none; }
+.skip-link:focus { top: 16px; }
+.skip-link:focus-visible { outline-color: var(--text); }
+
 .page { min-width: 0; }
+#top { scroll-margin-top: 0; }
 
 /* ---- Header / hero ---- */
 .hero { position: relative; min-height: 640px; display: flex; flex-direction: column; }
@@ -196,7 +211,10 @@ a:hover { color: var(--text); text-decoration: underline; }
 .brand img { height: 46px; width: auto; border-radius: 6px; }
 .brand strong { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; letter-spacing: 0.06em; text-transform: uppercase; }
 
-.nav { display: flex; gap: 22px; flex-wrap: wrap; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; background: rgba(20,14,18,0.55); padding: clamp(12px, 2.5vw, 20px) clamp(16px, 3vw, 30px); border-radius: 10px; pointer-events: auto; row-gap: 10px; }
+.nav { display: flex; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; background: rgba(20,14,18,0.55); padding: clamp(12px, 2.5vw, 20px) clamp(16px, 3vw, 30px); border-radius: 10px; pointer-events: auto; }
+.nav-list { list-style: none; margin: 0; padding: 0; display: flex; gap: 10px 22px; flex-wrap: wrap; align-items: center; }
+.nav-list li { display: flex; }
+.nav-link, .nav-cta { display: inline-flex; align-items: center; min-height: 44px; margin: -13px 0; }
 .nav-link { color: var(--text); text-underline-offset: 8px; transition: color 0.2s ease; }
 .nav-link:hover { text-decoration: underline; text-decoration-color: var(--amber); text-decoration-thickness: 2px; color: var(--amber); }
 .nav-cta { color: var(--amber); text-underline-offset: 8px; }
@@ -212,44 +230,62 @@ a:hover { color: var(--text); text-decoration: underline; }
 .btn-primary:hover { transform: translateY(-3px); background: var(--red-hover); box-shadow: 0 12px 24px rgba(216,30,38,0.45); text-decoration: none; }
 .btn-ghost { background: rgba(245,241,234,0.14); backdrop-filter: blur(6px); color: var(--text); font-weight: 600; padding: 15px 32px; border-radius: 6px; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease; }
 .btn-ghost:hover { transform: translateY(-3px); background: var(--text); color: var(--bg); text-decoration: none; }
+.btn-sm { display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; padding: 12px 20px; font-size: 13px; }
+
+/* ---- Barre collante : révélée par js/sticky.js une fois le hero dépassé ; absente sans JS ---- */
+.topbar-sticky { position: fixed; top: 0; left: 0; right: 0; z-index: 50; visibility: hidden; transform: translateY(-100%); transition: transform 0.25s ease, visibility 0s linear 0.25s; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 4px 24px; background: rgba(20,14,18,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid rgba(245,241,234,0.1); }
+.topbar-sticky-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); font-family: 'Barlow Condensed', sans-serif; font-size: 16px; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; min-height: 44px; }
+.topbar-sticky-brand:hover { color: var(--amber); text-decoration: none; }
+.topbar-sticky-brand img { height: 32px; width: auto; border-radius: 4px; }
+
+.topbar-sticky.is-visible { visibility: visible; transform: none; transition: transform 0.25s ease, visibility 0s; }
+
+/* ---- Bande de chiffres clés ---- */
+.strip-wrap { background: var(--strip-bg); border-top: 1px solid rgba(245,241,234,0.12); border-bottom: 1px solid rgba(245,241,234,0.12); }
+.strip { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 32px; max-width: 1120px; margin: 0 auto; padding: 16px 24px; box-sizing: border-box; font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text); }
+.strip li { display: flex; align-items: center; }
+.strip li + li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); flex: none; margin-right: 32px; }
 
 /* ---- Section « La vie du club » ---- */
 .club { max-width: 1120px; margin: 0 auto; padding: 64px 24px 72px; position: relative; }
-.section-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(32px, 5vw, 52px); font-weight: 800; text-transform: uppercase; margin: 0 0 6px; }
+.section-title { font-family: 'Barlow Condensed', sans-serif; font-size: var(--h2-lg); font-weight: 800; text-transform: uppercase; margin: 0 0 6px; }
 .section-subtitle { margin: 0 0 36px; color: rgba(245,241,234,0.6); font-size: 15px; }
 .club-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px 32px; }
-.club-item { border-top: 1px solid rgba(245,241,234,0.25); padding-top: 20px; transition: border-color 0.25s ease; cursor: default; }
+.club-item { border-top: 1px solid rgba(245,241,234,0.25); padding-top: 20px; transition: border-color 0.25s ease; }
 .club-item:hover { border-color: var(--amber); }
-.club-item-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
-.club-item-num { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; color: var(--red); }
-.club-item-num--amber { color: var(--amber); }
-.club-item-title { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 700; text-transform: uppercase; }
+.club-item-title { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 700; text-transform: uppercase; margin: 0 0 10px; line-height: 1.2; }
 .club-item p { margin: 0; font-size: 15px; line-height: 1.7; color: rgba(245,241,234,0.75); }
 
 /* ---- Section « Horaires » ---- */
-.horaires { background: var(--red); padding: 56px 24px; }
+.horaires { background: var(--red-deep); padding: 56px 24px; }
 .horaires-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; align-items: center; }
-.horaires-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(34px, 5vw, 56px); font-weight: 800; text-transform: uppercase; margin: 0 0 12px; line-height: 1; }
-.horaires-intro { margin: 0 0 10px; font-size: 16px; line-height: 1.6; color: rgba(245,241,234,0.9); }
-.horaires-address { margin: 0; font-size: 15px; color: rgba(245,241,234,0.85); }
+.horaires-title { font-family: 'Barlow Condensed', sans-serif; font-size: var(--h2-lg); font-weight: 800; text-transform: uppercase; margin: 0 0 12px; line-height: 1; }
+.horaires-intro { margin: 0 0 10px; font-size: 16px; line-height: 1.6; color: var(--text); }
+.horaires-address { margin: 0; font-size: 15px; color: var(--text); }
 .horaires-list { font-size: 17px; line-height: 1.7; }
-.horaires-row { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid rgba(245,241,234,0.35); padding: 8px 0; }
+.horaires-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid rgba(245,241,234,0.35); padding: 8px 0; }
 .horaires-row:last-child { border-bottom: 0; }
-.horaires-note { max-width: 1120px; margin: 20px auto 0; font-size: 14px; color: rgba(245,241,234,0.8); }
+.horaires-row span { flex: 1; min-width: 0; }
+.horaires-row strong { white-space: nowrap; }
+.horaires-note { max-width: 1120px; margin: 20px auto 0; font-size: 14px; color: var(--text); }
 
 /* ---- Section « Tarifs » ---- */
 .tarifs { max-width: 1120px; margin: 0 auto; padding: 72px 24px 24px; }
+.tarifs-lead { margin: 0 0 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 800; color: var(--amber); text-transform: uppercase; letter-spacing: 0.02em; }
 .tarifs-intro { margin: 0 0 28px; color: rgba(245,241,234,0.75); font-size: 16px; line-height: 1.6; max-width: 70ch; }
-.tarifs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
-.tarif { background: var(--bg-card); border-radius: 10px; padding: 20px 22px; transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease; cursor: default; }
+.tarifs-group { margin-top: 36px; }
+.tarifs-group:first-of-type { margin-top: 0; }
+.tarifs-group-title { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(245,241,234,0.8); margin: 0 0 12px; padding-bottom: 6px; border-bottom: 1px solid rgba(245,241,234,0.18); }
+.tarifs-group-note { margin: 8px 0 0; font-size: 14px; color: rgba(245,241,234,0.75); }
+.tarifs-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+.tarif { background: var(--bg-card); border-radius: 10px; padding: 20px 22px; transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease; }
 .tarif:hover { transform: translateY(-6px); background: var(--bg-card-hover); box-shadow: 0 14px 28px rgba(0,0,0,0.45), inset 0 -3px 0 var(--amber); }
 .tarif-price { font-family: 'Barlow Condensed', sans-serif; font-size: 34px; font-weight: 800; color: var(--amber); }
 .tarif-label { font-size: 14px; margin-top: 2px; }
-.tarif-label em { font-size: 12px; color: rgba(245,241,234,0.6); }
 .location-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; margin-top: 32px; }
-.location { border: 1px solid rgba(245,241,234,0.25); border-radius: 10px; padding: 22px; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; cursor: default; }
+.location { border: 1px solid rgba(245,241,234,0.25); border-radius: 10px; padding: 22px; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; }
 .location:hover { transform: translateY(-6px); border-color: var(--amber); box-shadow: 0 14px 28px rgba(0,0,0,0.45); }
-.location-title { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; text-transform: uppercase; }
+.location-title { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; text-transform: uppercase; margin: 0; }
 .location-detail { font-size: 15px; margin-top: 6px; color: rgba(245,241,234,0.75); }
 
 /* ---- Section « Inscription » ---- */
@@ -259,10 +295,14 @@ a:hover { color: var(--text); text-decoration: underline; }
 .inscription-card p { margin: 6px 0 0; font-size: 15px; line-height: 1.5; max-width: 60ch; }
 .btn-dark { background: var(--bg); color: var(--text); font-weight: 700; padding: 14px 28px; border-radius: 6px; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
 .btn-dark:hover { transform: translateY(-3px); background: var(--bg-card-hover); box-shadow: 0 12px 24px rgba(0,0,0,0.35); text-decoration: none; }
+.inscription-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-ghost-dark { background: transparent; border: 2px solid var(--bg); color: var(--bg); font-weight: 700; padding: 12px 26px; border-radius: 6px; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease; }
+.btn-ghost-dark:hover { transform: translateY(-3px); background: var(--bg); color: var(--text); text-decoration: none; }
+.btn-ghost-dark:focus-visible { outline-color: var(--bg); }
 
 /* ---- Section « Galerie » ---- */
 .galerie { max-width: 1120px; margin: 0 auto; padding: 56px 24px 0; }
-.section-title-sm { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(28px, 4vw, 42px); font-weight: 800; text-transform: uppercase; margin: 0 0 6px; }
+.section-title-sm { font-family: 'Barlow Condensed', sans-serif; font-size: var(--h2-sm); font-weight: 800; text-transform: uppercase; margin: 0 0 6px; }
 .galerie-subtitle { margin: 0 0 24px; color: rgba(245,241,234,0.6); font-size: 15px; }
 .galerie-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
 .galerie-item { border-radius: 10px; overflow: hidden; height: 340px; transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease; filter: saturate(0.9); }
@@ -271,9 +311,18 @@ a:hover { color: var(--text); text-decoration: underline; }
 
 /* ---- Section « Nous trouver » ---- */
 .carte { max-width: 1120px; margin: 0 auto; padding: 56px 24px 72px; }
-.carte-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(28px, 4vw, 42px); font-weight: 800; text-transform: uppercase; margin: 0 0 20px; }
-.carte-frame { border-radius: 12px; overflow: hidden; border: 1px solid rgba(245,241,234,0.2); }
-.carte-frame iframe { display: block; width: 100%; height: 400px; border: 0; }
+.carte-title { font-family: 'Barlow Condensed', sans-serif; font-size: var(--h2-sm); font-weight: 800; text-transform: uppercase; margin: 0 0 20px; }
+.carte-box { border-radius: 12px; overflow: hidden; border: 1px solid rgba(245,241,234,0.2); display: grid; grid-template-columns: minmax(260px, 2fr) 3fr; }
+.carte-panel { background: var(--bg-card); padding: 28px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 6px; }
+.carte-panel-title { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 700; text-transform: uppercase; margin: 0 0 4px; line-height: 1.1; }
+.carte-address { margin: 0; font-size: 16px; line-height: 1.5; }
+.carte-note { margin: 0 0 14px; font-size: 14px; color: rgba(245,241,234,0.75); }
+.carte-map { position: relative; min-height: 320px; }
+.carte-map a { display: block; height: 100%; }
+.carte-map img { display: block; width: 100%; height: 100%; min-height: 320px; object-fit: cover; filter: saturate(0.85); transition: filter 0.3s ease; }
+.carte-map a:hover img { filter: saturate(1.05); }
+.carte-credit { position: absolute; right: 8px; bottom: 8px; font-size: 11px; line-height: 1; padding: 5px 8px; border-radius: 4px; background: rgba(20,14,18,0.7); color: rgba(245,241,234,0.85); }
+.carte-credit a { color: var(--text); text-decoration: underline; display: inline-block; padding: 7px 4px; margin: -7px -4px; }
 
 /* ---- Footer ---- */
 .footer { background: var(--bg-footer); padding: 40px 24px; text-align: center; }
@@ -281,7 +330,44 @@ a:hover { color: var(--text); text-decoration: underline; }
 .footer-inner img { height: 56px; width: auto; border-radius: 6px; }
 .footer-address { font-size: 14px; color: rgba(245,241,234,0.7); }
 .footer-links { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; font-size: 14px; }
-.footer-legal { font-size: 12px; color: rgba(245,241,234,0.45); }
+.footer-links a { display: inline-flex; align-items: center; min-height: 44px; margin: -13px 0; }
+.footer-motto { margin: 10px 0 0; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: 0.04em; color: var(--amber); }
+.footer-motto em { font-style: normal; }
+.footer-motto-fr { margin: -4px 0 0; font-size: 14px; color: rgba(245,241,234,0.7); }
+.footer-legal { font-size: 12px; color: rgba(245,241,234,0.65); }
 
 /* Texte réservé aux lecteurs d'écran (invisible à l'écran) */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* ---- Adaptations mobile ---- */
+@media (max-width: 760px) {
+  .carte-box { grid-template-columns: 1fr; }
+  .carte-map, .carte-map img { min-height: 240px; }
+}
+@media (max-width: 640px) {
+  .topbar-sticky-brand span { display: none; }
+  .strip { flex-direction: column; gap: 6px; font-size: 17px; text-align: center; padding: 14px 24px; }
+  .strip li + li::before { display: none; }
+  .tarifs-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tarif { padding: 16px 16px; }
+  .tarif-price { font-size: 30px; }
+  .galerie-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .galerie-item { height: 200px; }
+}
+@media (max-width: 480px) {
+  .nav { width: 100%; box-sizing: border-box; }
+  .nav-list { justify-content: center; gap: 26px 14px; }
+  .nav-list a { font-size: 13px; }
+}
+
+@media (max-width: 360px) {
+  .nav-list { display: grid; grid-template-columns: repeat(2, auto); justify-content: center; column-gap: 22px; row-gap: 26px; }
+  .horaires-list { font-size: 16px; }
+}
+
+/* ---- Préférence « réduire les animations » ---- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation: none !important; }
+  .btn-primary:hover, .btn-ghost:hover, .btn-dark:hover, .btn-ghost-dark:hover, .tarif:hover, .location:hover, .galerie-item:hover { transform: none !important; }
+}

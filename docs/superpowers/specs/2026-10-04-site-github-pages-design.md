@@ -8,6 +8,12 @@ Publier sur GitHub Pages (`https://anthonyguillaume.github.io/archeriedesgoths/`
 **visuellement identique** de la page produite avec Claude Design (`Archerie des Goths.html`,
 bundle de 17 Mo auto-extractible), sans dépendre du runtime Claude Design.
 
+> **Note (branche `design-review`)** : la fidélité au pixel décrite ici vaut pour le port initial
+> (`main`, commit 47ad84f). La branche `design-review` s'en écarte volontairement : contraste,
+> cibles tactiles 44 px, focus clavier, reduced-motion, WebP via `<picture>`, regroupement des
+> tarifs, barre collante JS, plan OpenStreetMap à la place de l'iframe Google, galerie 2 colonnes
+> mobile. Le tableau de hauteurs ci-dessous ne s'y applique plus.
+
 ## Ce que contient la source
 
 - Une seule page (one-page) : header hero, sections `#club`, `#horaires`, `#tarifs`,
@@ -36,7 +42,7 @@ css/style.css         reset minimal, @font-face, variables de couleurs, composan
 assets/fonts/*.woff2  polices renommées lisiblement (barlow-400-latin.woff2, …)
 assets/img/*.jpg      images renommées (hero.jpg, blason.jpg, salle.jpg, terrain.jpg,
                       pas-de-tir.jpg, parcours-nature.jpg), redimensionnées (max 1600 px,
-                      qualité ~82) — même rendu à l'écran, poids divisé par 10
+                      qualité 60) — même rendu à l'écran, poids divisé par 10
 favicon.png           dérivé du blason
 .nojekyll             évite le traitement Jekyll de GitHub Pages
 README.md             comment publier / modifier

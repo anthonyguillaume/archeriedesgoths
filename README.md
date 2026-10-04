@@ -33,6 +33,20 @@ sont les originaux redimensionnés à 1600 px côté long (JPEG qualité 60 via 
 remplacer une photo, garder le même nom de fichier et un côté long de 1600 px. Détails et
 critères de fidélité : `docs/superpowers/specs/2026-10-04-site-github-pages-design.md`.
 
+## Fonctionnement technique (branche design-review)
+
+- `js/sticky.js` : barre collante (blason + bouton « Rejoindre le club ») révélée par un
+  `IntersectionObserver` une fois le hero sorti de l'écran. Sans JavaScript, la barre n'apparaît
+  pas et la navigation du hero reste disponible.
+- Images : chaque photo est servie en WebP via `<picture>` avec le JPEG en repli. Suffixes à
+  conserver : `hero-1000` / `hero-1600`, galerie `-450` / `-900` (côté large), `blason-96` / `-168`,
+  `plan-gueux-1120` / `plan-gueux` (2240). Pour regénérer une variante (Pillow requis, non installé
+  par le site) :
+  `python3 -c "from PIL import Image; im=Image.open('assets/img/salle.jpg'); im.resize((450, round(im.height*450/im.width))).save('assets/img/salle-450.webp', quality=78, method=6)"`
+- `assets/img/plan-gueux.jpg` : plan statique 2240×800 assemblé à partir des tuiles OpenStreetMap
+  zoom 16 autour de 49.2507, 3.9184 (Rue du Moutier, Gueux), marqueur rouge/ambre au centre.
+  Licence ODbL : l'attribution « © OpenStreetMap contributors » affichée dans la page est obligatoire.
+
 ## Déploiement
 
 GitHub Pages est configuré en « Deploy from a branch » : branche `main`, dossier `/` (racine).
