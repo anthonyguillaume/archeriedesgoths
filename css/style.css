@@ -208,7 +208,7 @@ a:hover { color: var(--text); text-decoration: underline; }
 
 .topbar { position: relative; max-width: 1120px; width: 100%; margin: 0 auto; padding: 28px 24px 0; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; pointer-events: none; }
 .brand { display: flex; align-items: center; gap: 12px; background: rgba(20,14,18,0.55); padding: 8px 16px 8px 8px; border-radius: 10px; }
-.brand img { height: 46px; width: auto; border-radius: 6px; }
+.brand img { height: 56px; width: auto; border-radius: 6px; }
 .brand strong { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; letter-spacing: 0.06em; text-transform: uppercase; }
 
 .nav { display: flex; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; background: rgba(20,14,18,0.55); padding: clamp(12px, 2.5vw, 20px) clamp(16px, 3vw, 30px); border-radius: 10px; pointer-events: auto; }
