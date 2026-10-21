@@ -49,6 +49,10 @@ contraste ≥ 4,5:1 sur tout texte ajouté, cibles cliquables ≥ 44 px de haut,
   - chaque photo : JPEG de repli + variantes WebP référencées dans `<picture>` avec des suffixes
     fixes (`hero-1000/-1600`, galerie `-450/-900`, `blason-96/-168`, `plan-gueux-1120` et
     `plan-gueux` 2240). Remplacer une photo = remplacer le JPEG **et** regénérer ses WebP.
+- **Concours** (`#concours`, avant « Nous trouver ») : dates relevées sur ffta.fr (organisateur
+  ARCHERIE DES GOTHS ; le site bloque curl, passer par Playwright). Images provisoires reprises de
+  la galerie. Mandat absent = `<span class="btn-disabled">Mandat à venir</span>` ; publié = PDF
+  dans `assets/docs/` et lien (voir le commentaire HTML dans la section).
 - **Barre collante** (`js/sticky.js`) : `position: fixed`, cachée par défaut, révélée par un
   `IntersectionObserver` sur `.hero`. Sans JS elle n'existe pas visuellement. Si sa hauteur
   change, ajuster `scroll-padding-top` sur `html` et le `rootMargin` du script.
