@@ -321,6 +321,7 @@ a:hover { color: var(--text); text-decoration: underline; }
 .concours-desc { margin: 0 0 6px; font-size: 15px; line-height: 1.6; color: rgba(245,241,234,0.75); }
 .concours-body .btn-sm { margin-top: auto; }
 .btn-disabled { background: var(--bg-card-hover); color: rgba(245,241,234,0.75); font-weight: 700; border-radius: 6px; letter-spacing: 0.1em; text-transform: uppercase; cursor: not-allowed; }
+.concours-card:hover .btn-disabled { background: var(--bg-card); }
 
 /* ---- Section « Nous trouver » ---- */
 .carte { max-width: 1120px; margin: 0 auto; padding: 56px 24px 72px; }
