@@ -312,7 +312,8 @@ a:hover { color: var(--text); text-decoration: underline; }
 /* ---- Section « Concours » ---- */
 .concours { max-width: 1120px; margin: 0 auto; padding: 56px 24px 0; }
 .concours-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
-.concours-card { background: var(--bg-card); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+.concours-card { background: var(--bg-card); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease; }
+.concours-card:hover { transform: translateY(-6px); background: var(--bg-card-hover); box-shadow: 0 14px 28px rgba(0,0,0,0.45), inset 0 -3px 0 var(--amber); }
 .concours-card img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
 .concours-body { padding: 20px 22px 22px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; flex: 1; }
 .concours-date { margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--amber); text-transform: uppercase; letter-spacing: 0.04em; }
@@ -381,7 +382,7 @@ a:hover { color: var(--text); text-decoration: underline; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation: none !important; }
-  .btn-primary:hover, .btn-ghost:hover, .btn-dark:hover, .btn-ghost-dark:hover, .tarif:hover, .location:hover, .galerie-item:hover { transform: none !important; }
+  .btn-primary:hover, .btn-ghost:hover, .btn-dark:hover, .btn-ghost-dark:hover, .tarif:hover, .concours-card:hover, .location:hover, .galerie-item:hover { transform: none !important; }
 }
 
 /* Page Mentions légales */
