@@ -5,7 +5,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Ce qu'est ce dépôt
 
 Site vitrine one-page du club de tir à l'arc **Archerie des Goths** (Gueux, Marne), servi par
-GitHub Pages depuis la racine de `main` : <https://anthonyguillaume.github.io/archeriedesgoths/>.
+GitHub Pages depuis la racine de `main` : <https://archeriedesgoths.fr/> (domaine personnalisé,
+fichier `CNAME`, DNS chez Infomaniak ; l'ancienne adresse github.io y redirige).
 HTML + CSS + un script de 10 lignes, **sans build, sans dépendance npm**. Décision prise le
 2026-10-04 : pas de React, pas d'outillage ; un tarif ou un horaire se modifie dans `index.html`.
 
@@ -78,7 +79,7 @@ contraste ≥ 4,5:1 sur tout texte ajouté, cibles cliquables ≥ 44 px de haut,
 - Ne jamais pousser sans l'accord explicite de l'utilisateur (règle globale). Pas de mention de
   Claude dans les commits ni les PR.
 - Déploiement automatique : tout push sur `main` est en ligne en une à deux minutes
-  (`.nojekyll` présent). Vérifier avec `curl -s https://anthonyguillaume.github.io/archeriedesgoths/`.
+  (`.nojekyll` présent). Vérifier avec `curl -s https://archeriedesgoths.fr/`.
 - Historique utile : commit `47ad84f` = port pixel-identique du design ; PR #1 (branche
   `design-review`, conservée) = revue design en trois lots ; ensuite mentions légales.
 

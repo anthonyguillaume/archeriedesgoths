@@ -1,7 +1,7 @@
 # Archerie des Goths — site du club
 
 Site vitrine du club de tir à l'arc de Gueux (Marne), publié sur GitHub Pages :
-<https://anthonyguillaume.github.io/archeriedesgoths/>
+<https://archeriedesgoths.fr/>
 
 ## Contenu
 
